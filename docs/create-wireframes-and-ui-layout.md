@@ -1,0 +1,279 @@
+
+
+# Wireframes & UI Layout — "Le Besian Balls" Bakery Website
+
+## Complete Design System & Wireframe Documentation
+
+---
+
+## 1. DESIGN PRINCIPLES
+
+Before diving into layouts, I'm establishing the guiding principles that will anchor every design decision:
+
+1. **Mobile-First, Always** — Every layout starts at 375px and scales up
+2. **Accessibility-First** — WCAG 2.1 AA minimum; every interaction has a keyboard and screen-reader path
+3. **Appetite Over Overwhelm** — The site should make you *hungry*. Big, beautiful imagery. Warm tones. Breathing room.
+4. **Frictionless Ordering** — From homepage to cart in ≤ 3 clicks
+5. **Content-Owner Friendly** — Layouts designed for Sanity CMS content blocks so the bakery owner can update without a developer
+
+---
+
+## 2. USER FLOW MAP
+
+I mapped the primary user journeys before touching any layouts:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     PRIMARY USER FLOWS                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  FLOW 1: Browse & Order                                      │
+│  Landing → Menu/Products → Product Detail → Add to Cart      │
+│  → Cart → Checkout (Snipcart) → Confirmation                │
+│                                                              │
+│  FLOW 2: Learn About the Bakery                              │
+│  Landing → About Us → (optional) Gallery                     │
+│                                                              │
+│  FLOW 3: Get in Touch / Find Us                              │
+│  Landing → Contact → Map / Hours / Form                      │
+│                                                              │
+│  FLOW 4: Quick Re-order (Returning Customer)                 │
+│  Landing → Cart Icon → Checkout                              │
+│                                                              │
+│  FLOW 5: Custom Cake / Special Order                         │
+│  Landing → Custom Orders → Inquiry Form → Confirmation       │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Friction Analysis:**
+- Flow 1 has the most steps — I'll add a "Quick Add" button on product cards to skip the detail page for returning customers
+- Flow 3 should surface hours + location on the homepage footer so many users never need to navigate away
+- Flow 5 needs a clear CTA on the homepage — custom orders are likely high-margin
+
+---
+
+## 3. SITE MAP & NAVIGATION STRUCTURE
+
+```
+                        ┌──────────┐
+                        │  HOME    │
+                        └────┬─────┘
+            ┌────────┬───────┼────────┬──────────┐
+            │        │       │        │          │
+        ┌───▼──┐ ┌───▼──┐ ┌─▼───┐ ┌──▼───┐ ┌───▼────┐
+        │ MENU │ │ABOUT │ │CUSTOM│ │CONTACT│ │ CART   │
+        │      │ │  US  │ │ORDERS│ │      │ │(overlay)│
+        └───┬──┘ └──────┘ └──────┘ └──────┘ └────────┘
+            │
+    ┌───────┼────────┬──────────┐
+    │       │        │          │
+┌───▼──┐┌───▼──┐┌────▼───┐┌────▼────┐
+│Breads││Pastry││ Cakes  ││Seasonal │
+└───┬──┘└──────┘└────────┘└─────────┘
+    │
+┌───▼──────────┐
+│Product Detail │
+└──────────────┘
+```
+
+### Navigation Bar Specification
+
+| Element | Mobile (375px) | Tablet (768px) | Desktop (1280px+) |
+|---|---|---|---|
+| Logo | Left-aligned, 40px height | Left-aligned, 48px height | Left-aligned, 56px height |
+| Nav Links | Hidden → Hamburger menu | Visible, condensed | Visible, full spacing |
+| Cart Icon | Right-aligned, badge count | Right-aligned, badge count | Right-aligned, badge + "Cart" label |
+| CTA Button | Inside hamburger menu | Visible: "Order Now" | Visible: "Order Now" |
+| Nav Height | 56px | 64px | 72px |
+| Position | Sticky top | Sticky top | Sticky top |
+
+**Navigation Items (in order):**
+1. Menu
+2. Custom Orders
+3. About Us
+4. Contact
+5. 🛒 Cart (icon with item count badge)
+
+**Primary CTA:** "Order Now" — links to Menu page
+
+---
+
+## 4. RESPONSIVE BREAKPOINTS
+
+| Name | Width | Columns | Gutter | Margin |
+|---|---|---|---|---|
+| Mobile | 375px – 767px | 4 | 16px | 20px |
+| Tablet | 768px – 1279px | 8 | 24px | 32px |
+| Desktop | 1280px – 1919px | 12 | 24px | 64px |
+| Wide | 1920px+ | 12 | 32px | auto (max-width 1440px content) |
+
+---
+
+## 5. PAGE WIREFRAMES
+
+### 5A. HOMEPAGE
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ ▸ NAVBAR [Logo]     Menu  Custom  About  Contact   🛒  │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│              ╔═══════════════════════════╗               │
+│              ║      HERO SECTION         ║               │
+│              ║                           ║               │
+│              ║  Full-width background    ║               │
+│              ║  image: fresh baked goods ║               │
+│              ║                           ║               │
+│              ║  "Handcrafted with Love,  ║               │
+│              ║   Baked Fresh Daily"      ║               │
+│              ║                           ║               │
+│              ║  [ Order Now ]  [ Our Menu ]              │
+│              ║                           ║               │
+│              ║  Height: 85vh mobile      ║               │
+│              ║          70vh desktop     ║               │
+│              ╚═══════════════════════════╝               │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│              FEATURED PRODUCTS SECTION                   │
+│              "Our Bestsellers"                           │
+│                                                         │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐   │
+│  │ [image] │  │ [image] │  │ [image] │  │ [image] │   │
+│  │ Name    │  │ Name    │  │ Name    │  │ Name    │   │
+│  │ $price  │  │ $price  │  │ $price  │  │ $price  │   │
+│  │[Add🛒]  │  │[Add🛒]  │  │[Add🛒]  │  │[Add🛒]  │   │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘   │
+│                                                         │
+│  Mobile: 1 col scroll / Tablet: 2x2 / Desktop: 4 cols  │
+│                                                         │
+│              [ View Full Menu → ]                        │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│              ABOUT TEASER SECTION                        │
+│                                                         │
+│  ┌──────────────┐  ┌────────────────────────────┐       │
+│  │              │  │ "Our Story"                │       │
+│  │  [Bakery     │  │                            │       │
+│  │   interior   │  │ Short paragraph about the  │       │
+│  │   photo]     │  │ bakery's history, values,  │       │
+│  │              │  │ and passion.               │       │
+│  │              │  │                            │       │
+│  │              │  │ [ Read More → ]            │       │
+│  └──────────────┘  └────────────────────────────┘       │
+│                                                         │
+│  Mobile: stacked (image on top)                         │
+│  Desktop: side-by-side 50/50                            │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│              CUSTOM ORDERS CTA BANNER                    │
+│                                                         │
+│  ╔═══════════════════════════════════════════════╗       │
+│  ║  Background: warm accent color                ║       │
+│  ║                                               ║       │
+│  ║  "Dreaming of the Perfect Cake?"              ║       │
+│  ║  "We create custom cakes for every occasion"  ║       │
+│  ║                                               ║       │
+│  ║  [ Start Your Custom Order ]                  ║       │
+│  ╚═══════════════════════════════════════════════╝       │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│              TESTIMONIALS / SOCIAL PROOF                  │
+│                                                         │
+│  ★★★★★  "Best croissants in town!"                      │
+│         — Customer Name                                 │
+│                                                         │
+│  [ ● ] [ ○ ] [ ○ ]  (carousel dots)                    │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│              FOOTER                                      │
+│                                                         │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │
+│  │ LOGO +   │ │ HOURS    │ │ QUICK    │ │ SOCIAL   │   │
+│  │ Tagline  │ │          │ │ LINKS    │ │ MEDIA    │   │
+│  │          │ │ Mon-Fri  │ │          │ │          │   │
+│  │ Address  │ │ 7am-6pm  │ │ Menu     │ │ [fb]     │   │
+│  │ Phone    │ │ Sat      │ │ About    │ │ [ig]     │   │
+│  │ Email    │ │ 8am-4pm  │ │ Contact  │ │ [tw]     │   │
+│  │          │ │ Sun      │ │ Custom   │ │          │   │
+│  │          │ │ Closed   │ │ Orders   │ │          │   │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘   │
+│                                                         │
+│  © 2024 Le Besian Balls. All rights reserved.           │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Homepage Section Specs:**
+
+| Section | Mobile Height | Purpose | Key Interaction |
+|---|---|---|---|
+| Hero | 85vh | Emotional hook, primary CTAs | Parallax scroll (subtle) on desktop |
+| Featured Products | Auto | Drive orders | Quick-add to cart |
+| About Teaser | Auto | Build trust & story | Link to About page |
+| Custom Orders CTA | ~250px | Capture high-value leads | Link to Custom Orders form |
+| Testimonials | ~200px | Social proof | Auto-rotating carousel, swipeable on mobile |
+| Footer | Auto | Info & navigation | Map link, social links |
+
+---
+
+### 5B. MENU / PRODUCTS PAGE
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ ▸ NAVBAR                                                │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  PAGE HEADER: "Our Menu"                                │
+│  Subtext: "Everything baked fresh daily"                │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  CATEGORY FILTER BAR (sticky below nav on scroll)       │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌────────┐ ┌──────────┐   │
+│  │ All  │ │Breads│ │Pastry│ │ Cakes  │ │Seasonal  │   │
+│  │(●)   │ │      │ │      │ │        │ │          │   │
+│  └──────┘ └──────┘ └──────┘ └────────┘ └──────────┘   │
+│                                                         │
+│  Mobile: horizontally scrollable pill buttons           │
+│  Desktop: centered row                                  │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  PRODUCT GRID                                           │
+│                                                         │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │ ┌──────────┐ │  │ ┌──────────┐ │  │ ┌──────────┐ │  │
+│  │ │          │ │  │ │          │ │  │ │          │ │  │
+│  │ │  IMAGE   │ │  │ │  IMAGE   │ │  │ │  IMAGE   │ │  │
+│  │ │  (4:3)   │ │  │ │  (4:3)   │ │  │ │  (4:3)   │ │  │
+│  │ │          │ │  │ │          │ │  │ │          │ │  │
+│  │ └──────────┘ │  │ └──────────┘ │  │ └──────────┘ │  │
+│  │              │  │              │  │              │  │
+│  │ Category tag │  │ Category tag │  │ Category tag │  │
+│  │ Product Name │  │ Product Name │  │ Product Name │  │
+│  │ Short desc.. │  │ Short desc.. │  │ Short desc.. │  │
+│  │              │  │              │  │              │  │
+│  │ $X.XX        │  │ $X.XX        │  │ $X.XX        │  │
+│  │ [Add to Cart]│  │ [Add to Cart]│  │ [Add to Cart]│  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  │
+│                                                         │
+│  Mobile: 1 column (full width cards)                    │
+│  Tablet: 2 columns                                     │
+│  Desktop: 3 columns                                    │
+│                                                         │
+│  [ Load More ] or infinite scroll                       │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│ ▸ FOOTER                                                │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 5C. PRODUCT DETAIL PAGE
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ ▸ NAVBAR                                                │
+├─
